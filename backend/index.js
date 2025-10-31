@@ -7,7 +7,7 @@ dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 3000
-const URI = process.env.MONGODB_URI || "mongodb+srv://arjuniyyappan2005_db_user:RU30TEL2uYcO4WVr@initial.zifzynu.mongodb.net/?appName=initial"
+const URI = process.env.MONGODB_URI 
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
