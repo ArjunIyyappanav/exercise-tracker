@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom"; // Import NavLink
 
-export default function Navbar() {
+export default function NavBar() {
   
   // Helper function to apply classes
   const getNavLinkClass = ({ isActive }) =>
