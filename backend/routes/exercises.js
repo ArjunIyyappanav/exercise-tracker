@@ -1,4 +1,5 @@
 import Router from 'express';
+import { getexercises, createexercise, deleteexercise, updateexercise } from '../controllers/exercises.controller.js';
 
 const router = Router();
 
