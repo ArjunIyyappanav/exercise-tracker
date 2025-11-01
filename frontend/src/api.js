@@ -1,10 +1,7 @@
 import axios from "axios";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const API = axios.create({
-  baseURL: process.env.FRONT_URL, // your backend
+  baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
 export default API;

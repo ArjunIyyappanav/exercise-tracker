@@ -13,7 +13,7 @@ const URI = process.env.MONGODB_URI
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-  origin: process.env.FRONT_URL,
+  origin: process.env.FRONTEND_URL,
   methods: ['GET', 'POST', 'PATCH', 'DELETE']
 }))
 
