@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import ExerciseGroup from './models/exercise.js'
+import cors from 'cors'
 dotenv.config()
 
 
@@ -11,6 +12,11 @@ const URI = process.env.MONGODB_URI
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors({
+  origin: process.env.FRONT_URL,
+  methods: ['GET', 'POST', 'PATCH', 'DELETE']
+}))
+
 
 app.get('/', async(req, res) => {
   let exercises;
@@ -37,8 +43,34 @@ app.post('/', async (req, res) => {
   }
 })
 
+app.delete('/:id', async (req, res) => {
+  const { id } = req.params;  
+  try{
+    await ExerciseGroup.findByIdAndDelete(id);
+    return res.status(200).json({ message: 'Exercise deleted successfully' })
+  }catch(err){
+    return res.status(500).json({ error: `Failed to delete exercise because ${err}` })
+  }   
+})
 
-mongoose.connect(URI).
+app.patch('/:id', async (req, res) => {
+  const { id } = req.params;  
+  const { muscleGroup, exercises } = req.body;  
+  try{
+    const updatedExercise = await ExerciseGroup.findByIdAndUpdate(
+      id,
+      { muscleGroup, exercises },       
+
+      { new: true }
+    );
+    return res.status(200).json({ message: 'Exercise updated successfully', exercise: updatedExercise })
+  }catch(err){
+    return res.status(500).json({ error: `Failed to update exercise because ${err}` })
+  } 
+})
+
+
+mongoose.connect(process.env.MONGO_URI).
 then(
     app.listen(PORT, () => {
     console.log(`Connection is Successful\nServer is running on port ${PORT}`)
